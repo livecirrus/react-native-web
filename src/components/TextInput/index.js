@@ -27,6 +27,7 @@ class TextInput extends Component {
     onChangeText: PropTypes.func,
     onFocus: PropTypes.func,
     onSelectionChange: PropTypes.func,
+    onSubmitEditing: PropTypes.func,
     placeholder: PropTypes.string,
     placeholderTextColor: PropTypes.string,
     secureTextEntry: PropTypes.bool,
@@ -110,6 +111,13 @@ class TextInput extends Component {
     if (onSelectionChange) onSelectionChange(event)
   }
 
+  _onSubmitEditing(e) {
+    const { onSubmitEditing } = this.props
+    if (onSubmitEditing && e.keyCode == 13) {
+      onSubmitEditing();
+    }
+  }
+
   render() {
     const {
       /* eslint-disable react/prop-types */
@@ -167,6 +175,7 @@ class TextInput extends Component {
       onChange: this._onChange.bind(this),
       onFocus: this._onFocus.bind(this),
       onSelect: onSelectionChange && this._onSelectionChange.bind(this),
+      onKeyUp: this._onSubmitEditing.bind(this),
       readOnly: !editable,
       style: { ...styles.input, outline: style.outline },
       value
