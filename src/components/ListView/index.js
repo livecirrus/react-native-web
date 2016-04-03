@@ -28,17 +28,17 @@ export default class ListView extends Component {
     this.onRowHighlighted = (sectionId, rowId) => this._onRowHighlighted(sectionId, rowId)
   }
 
-  /* getScrollResponder() {
+  getScrollResponder() {
     return this.refs[SCROLLVIEW_REF] && this.refs[SCROLLVIEW_REF].getScrollResponder()
   }
-
+  
   scrollTo(...args) {
     return this.refs[SCROLLVIEW_REF] && this.refs[SCROLLVIEW_REF].scrollTo(...args)
   }
 
   setNativeProps(props) {
     return this.refs[SCROLLVIEW_REF] && this.refs[SCROLLVIEW_REF].setNativeProps(props)
-  }*/
+  }
 
   _onRowHighlighted(sectionId, rowId) {
     this.setState({highlightedRow: {sectionId, rowId}})
