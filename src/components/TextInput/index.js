@@ -113,7 +113,7 @@ class TextInput extends Component {
 
   _onSubmitEditing(e) {
     const { onSubmitEditing } = this.props
-    if (onSubmitEditing && e.keyCode == 13) {
+    if (onSubmitEditing && (e.which == 13)) {
       onSubmitEditing();
     }
   }
@@ -175,7 +175,7 @@ class TextInput extends Component {
       onChange: this._onChange.bind(this),
       onFocus: this._onFocus.bind(this),
       onSelect: onSelectionChange && this._onSelectionChange.bind(this),
-      onKeyUp: this._onSubmitEditing.bind(this),
+      onKeyPress: this._onSubmitEditing.bind(this),
       readOnly: !editable,
       style: { ...styles.input, outline: style.outline },
       value
