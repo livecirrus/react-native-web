@@ -147,7 +147,7 @@ var TextInput = (0, _NativeMethodsDecorator2.default)(_class = (_temp = _class2 
     value: function _onSubmitEditing(e) {
       var onSubmitEditing = this.props.onSubmitEditing;
 
-      if (onSubmitEditing && e.keyCode == 13) {
+      if (onSubmitEditing && e.which == 13) {
         onSubmitEditing();
       }
     }
@@ -212,7 +212,7 @@ var TextInput = (0, _NativeMethodsDecorator2.default)(_class = (_temp = _class2 
         onChange: this._onChange.bind(this),
         onFocus: this._onFocus.bind(this),
         onSelect: onSelectionChange && this._onSelectionChange.bind(this),
-        onKeyUp: this._onSubmitEditing.bind(this),
+        onKeyPress: this._onSubmitEditing.bind(this),
         readOnly: !editable,
         style: _extends({}, styles.input, { outline: style.outline }),
         value: value

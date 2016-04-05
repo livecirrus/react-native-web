@@ -40,6 +40,10 @@ var _StyleSheetPropType = require('../../apis/StyleSheet/StyleSheetPropType');
 
 var _StyleSheetPropType2 = _interopRequireDefault(_StyleSheetPropType);
 
+var _PointPropType = require('../../apis/StyleSheet/PointPropType');
+
+var _PointPropType2 = _interopRequireDefault(_PointPropType);
+
 var _View = require('../View');
 
 var _View2 = _interopRequireDefault(_View);
@@ -66,6 +70,7 @@ var ScrollView = _react2.default.createClass({
     refreshControl: _react.PropTypes.element,
     scrollEnabled: _react.PropTypes.bool,
     scrollEventThrottle: _react.PropTypes.number,
+    contentOffset: _PointPropType2.default,
     style: (0, _StyleSheetPropType2.default)(_ViewStylePropTypes2.default)
   }),
 
@@ -76,6 +81,11 @@ var ScrollView = _react2.default.createClass({
   },
   setNativeProps: function setNativeProps(props) {
     this.refs[SCROLLVIEW].setNativeProps(props);
+  },
+  componentDidMount: function componentDidMount() {
+    if (this.props.contentOffset) {
+      this.scrollTo({ x: this.props.contentOffset.x, y: this.props.contentOffset.y });
+    }
   },
 
 

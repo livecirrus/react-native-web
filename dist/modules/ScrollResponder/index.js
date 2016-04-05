@@ -15,6 +15,7 @@
 var Dimensions = require('../../apis/Dimensions');
 var Platform = require('../../apis/Platform');
 var React = require('react');
+var Animated = require('../../apis/Animated');
 var ReactDOM = require('react-dom');
 // var Subscribable = require('../Subscribable');
 var TextInputState = require('../../components/TextInput/TextInputState');
@@ -121,7 +122,8 @@ var ScrollResponderMixin = {
       // - Determine if releasing should dismiss the keyboard when we are in
       // tap-to-dismiss mode (!this.props.keyboardShouldPersistTaps).
       observedScrollSinceBecomingResponder: false,
-      becameResponderWhileAnimating: false
+      becameResponderWhileAnimating: false,
+      scrollAnim: new Animated.ValueXY()
     };
   },
 
@@ -225,6 +227,9 @@ var ScrollResponderMixin = {
     var nativeEvent = e.nativeEvent;
     this.state.isTouching = nativeEvent.touches.length !== 0;
     this.props.onTouchEnd && this.props.onTouchEnd(e);
+    if (!this.state.isTouching) {
+      this.scrollResponderHandleMomentumScrollBegin();
+    }
   },
 
   /**
@@ -364,8 +369,22 @@ var ScrollResponderMixin = {
       animated = _ref.animated;
     }
     var node = this.scrollResponderGetScrollableNode();
-    node.scrollLeft = x || 0;
-    node.scrollTop = y || 0;
+    if (animated) {
+      this.state.scrollAnim.setValue({ x: node.scrollLeft, y: node.scrollTop });
+      var timing = Animated.timing( // Uses easing functions
+      this.state.scrollAnim, // The value to drive
+      { toValue: { x: x || 0, y: y || 0 } });
+      // Configuration
+      this.state.scrollAnim.removeAllListeners();
+      this.state.scrollAnim.addListener(function (value) {
+        node.scrollLeft = value.x;
+        node.scrollTop = value.y;
+      });
+      timing.start();
+    } else {
+      node.scrollLeft = x || 0;
+      node.scrollTop = y || 0;
+    }
   },
 
   /**

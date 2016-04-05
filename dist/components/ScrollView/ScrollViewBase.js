@@ -106,6 +106,7 @@ var ScrollViewBase = (_temp = _class = function (_Component) {
 
       this._state.isScrolling = false;
       if (onScroll) onScroll(e);
+      this.props.onMomentumScrollEnd(e);
     }
   }, {
     key: '_shouldEmitScrollEvent',

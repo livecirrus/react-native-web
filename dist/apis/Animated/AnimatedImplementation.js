@@ -822,6 +822,13 @@ var AnimatedValueXY = function (_AnimatedWithChildren2) {
       this.y.removeListener(this._listeners[id].y);
       delete this._listeners[id];
     }
+  }, {
+    key: 'removeAllListeners',
+    value: function removeAllListeners() {
+      this.x.removeAllListeners();
+      this.y.removeAllListeners();
+      this._listeners = {};
+    }
 
     /**
      * Converts `{x, y}` into `{left, top}` for use in style, e.g.
