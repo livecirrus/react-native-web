@@ -75,6 +75,7 @@ export default class ScrollViewBase extends Component {
     const { onScroll } = this.props
     this._state.isScrolling = false
     if (onScroll) onScroll(e)
+    this.props.onMomentumScrollEnd(e);
   }
 
   _shouldEmitScrollEvent(lastTick, eventThrottle) {
