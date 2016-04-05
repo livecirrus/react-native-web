@@ -14,6 +14,7 @@ import ScrollResponder from '../../modules/ScrollResponder'
 import ScrollViewBase from './ScrollViewBase'
 import StyleSheet from '../../apis/StyleSheet'
 import StyleSheetPropType from '../../apis/StyleSheet/StyleSheetPropType'
+import PointPropType from '../../apis/StyleSheet/PointPropType'
 import View from '../View'
 import ViewStylePropTypes from '../View/ViewStylePropTypes'
 
@@ -32,6 +33,7 @@ const ScrollView = React.createClass({
     refreshControl: PropTypes.element,
     scrollEnabled: PropTypes.bool,
     scrollEventThrottle: PropTypes.number,
+    contentOffset: PointPropType,
     style: StyleSheetPropType(ViewStylePropTypes)
   },
 
@@ -43,6 +45,12 @@ const ScrollView = React.createClass({
 
   setNativeProps(props: Object) {
     this.refs[SCROLLVIEW].setNativeProps(props)
+  },
+
+  componentDidMount() {
+    if (this.props.contentOffset) {
+      this.scrollTo({x: this.props.contentOffset.x, y: this.props.contentOffset.y})
+    }
   },
 
   /**
