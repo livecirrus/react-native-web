@@ -15,6 +15,7 @@
 var Dimensions = require('../../apis/Dimensions');
 var Platform = require('../../apis/Platform');
 var React = require('react');
+var Animated = require('../../apis/Animated');
 var ReactDOM = require('react-dom');
 // var Subscribable = require('../Subscribable');
 var TextInputState = require('../../components/TextInput/TextInputState');
@@ -113,6 +114,7 @@ type State = {
     lastMomentumScrollEndTime: number;
     observedScrollSinceBecomingResponder: boolean;
     becameResponderWhileAnimating: boolean;
+    scrollAnim: Object;
 };
 type Event = Object;
 
@@ -131,6 +133,7 @@ var ScrollResponderMixin = {
       // tap-to-dismiss mode (!this.props.keyboardShouldPersistTaps).
       observedScrollSinceBecomingResponder: false,
       becameResponderWhileAnimating: false,
+      scrollAnim: new Animated.ValueXY()
     };
   },
 
@@ -381,8 +384,22 @@ var ScrollResponderMixin = {
       ({x, y, animated} = x || {});
     }
     const node = this.scrollResponderGetScrollableNode()
-    node.scrollLeft = x || 0
-    node.scrollTop = y || 0
+    if (animated) {
+      this.state.scrollAnim.setValue({x: node.scrollLeft, y: node.scrollTop});
+      let timing = Animated.timing(  // Uses easing functions
+        this.state.scrollAnim,  // The value to drive
+        {toValue: {x: x || 0, y: y || 0}},  // Configuration
+      )
+      this.state.scrollAnim.removeAllListeners();
+      this.state.scrollAnim.addListener((value) => {
+        node.scrollLeft = value.x
+        node.scrollTop = value.y
+      })
+      timing.start()
+    } else {
+      node.scrollLeft = x || 0
+      node.scrollTop = y || 0
+    }
   },
 
   /**
