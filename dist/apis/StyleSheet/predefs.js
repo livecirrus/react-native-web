@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 /**
  * Reset unwanted styles beyond the control of React inline styles
  */
-var resetCSS = exports.resetCSS = '/* React Native for Web */\nhtml {font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0)}\nbody {margin:0}\nbutton::-moz-focus-inner, input::-moz-focus-inner {border:0;padding:0}\ninput[type="search"]::-webkit-search-cancel-button, input[type="search"]::-webkit-search-decoration {display:none}';
+var resetCSS = exports.resetCSS = '/* React Native for Web */\nhtml {font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0)}\nbody {margin:0}\ndiv {-webkit-overflow-scrolling:touch}\nbutton::-moz-focus-inner, input::-moz-focus-inner {border:0;padding:0}\ninput[type="search"]::-webkit-search-cancel-button, input[type="search"]::-webkit-search-decoration {display:none}';
 
 /**
  * Custom pointer event styles

@@ -227,9 +227,6 @@ var ScrollResponderMixin = {
     var nativeEvent = e.nativeEvent;
     this.state.isTouching = nativeEvent.touches.length !== 0;
     this.props.onTouchEnd && this.props.onTouchEnd(e);
-    if (!this.state.isTouching) {
-      this.scrollResponderHandleMomentumScrollBegin();
-    }
   },
 
   /**

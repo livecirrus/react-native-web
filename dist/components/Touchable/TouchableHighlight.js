@@ -108,7 +108,11 @@ var TouchableHighlight = React.createClass({
           backgroundColor: props.underlayColor
         }
       },
-      underlayStyle: [INACTIVE_UNDERLAY_PROPS.style]
+      underlayProps: {
+        style: {
+          backgroundColor: props.style.backgroundColor || null
+        }
+      }
     };
   },
 
@@ -201,9 +205,7 @@ var TouchableHighlight = React.createClass({
     this._hideTimeout = null;
     if (this._hasPressHandler() && this.refs[UNDERLAY_REF]) {
       this.refs[CHILD_REF].setNativeProps(INACTIVE_CHILD_PROPS);
-      this.refs[UNDERLAY_REF].setNativeProps(_extends({}, INACTIVE_UNDERLAY_PROPS, {
-        style: this.state.underlayStyle
-      }));
+      this.refs[UNDERLAY_REF].setNativeProps(this.state.underlayProps);
       this.props.onHideUnderlay && this.props.onHideUnderlay();
     }
   },
@@ -229,9 +231,6 @@ var TouchableHighlight = React.createClass({
         accessible: true,
         accessibilityLabel: this.props.accessibilityLabel,
         accessibilityRole: this.props.accessibilityRole || this.props.accessibilityTraits || 'button',
-        ref: UNDERLAY_REF,
-        style: [styles.root, this.props.style],
-        onLayout: this.props.onLayout,
         hitSlop: this.props.hitSlop,
         onKeyDown: function onKeyDown(e) {
           _this._onKeyEnter(e, _this.touchableHandleActivePressIn);
@@ -242,12 +241,15 @@ var TouchableHighlight = React.createClass({
         onKeyUp: function onKeyUp(e) {
           _this._onKeyEnter(e, _this.touchableHandleActivePressOut);
         },
+        onLayout: this.props.onLayout,
         onStartShouldSetResponder: this.touchableHandleStartShouldSetResponder,
         onResponderTerminationRequest: this.touchableHandleResponderTerminationRequest,
         onResponderGrant: this.touchableHandleResponderGrant,
         onResponderMove: this.touchableHandleResponderMove,
         onResponderRelease: this.touchableHandleResponderRelease,
         onResponderTerminate: this.touchableHandleResponderTerminate,
+        ref: UNDERLAY_REF,
+        style: [styles.root, this.props.style],
         tabIndex: '0',
         testID: this.props.testID },
       React.cloneElement(React.Children.only(this.props.children), {
@@ -261,9 +263,6 @@ var CHILD_REF = keyOf({ childRef: null });
 var UNDERLAY_REF = keyOf({ underlayRef: null });
 var INACTIVE_CHILD_PROPS = {
   style: StyleSheet.create({ x: { opacity: 1.0 } }).x
-};
-var INACTIVE_UNDERLAY_PROPS = {
-  style: { backgroundColor: null }
 };
 
 var styles = StyleSheet.create({

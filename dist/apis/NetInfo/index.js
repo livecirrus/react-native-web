@@ -64,8 +64,8 @@ var NetInfo = {
   isConnected: {
     addEventListener: function addEventListener(type, handler) {
       (0, _invariant2.default)(eventTypes.indexOf(type) !== -1, 'Trying to subscribe to unknown event: "%s"', type);
-      window.addEventListener('online', handler.bind(true), false);
-      window.addEventListener('offline', handler.bind(false), false);
+      window.addEventListener('online', handler.bind(null, true), false);
+      window.addEventListener('offline', handler.bind(null, false), false);
 
       return {
         remove: function remove() {
@@ -75,8 +75,8 @@ var NetInfo = {
     },
     removeEventListener: function removeEventListener(type, handler) {
       (0, _invariant2.default)(eventTypes.indexOf(type) !== -1, 'Trying to subscribe to unknown event: "%s"', type);
-      window.removeEventListener('online', handler.bind(true), false);
-      window.removeEventListener('offline', handler.bind(false), false);
+      window.removeEventListener('online', handler.bind(null, true), false);
+      window.removeEventListener('offline', handler.bind(null, false), false);
     },
     fetch: function fetch() {
       return new Promise(function (resolve, reject) {
